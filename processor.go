@@ -6,7 +6,7 @@ import (
 )
 
 type Processor interface {
-	RunProcessor(c chan time.Time)
+	RunProcessor(c <-chan time.Time)
 	Done()
 }
 
@@ -19,7 +19,7 @@ func NewProcessor(ptr Printer) Processor {
 	return &processor{ptr: ptr, done: make(chan bool)}
 }
 
-func (p *processor) RunProcessor(c chan time.Time) {
+func (p *processor) RunProcessor(c <-chan time.Time) {
 	for {
 		select {
 		case <-p.done:
